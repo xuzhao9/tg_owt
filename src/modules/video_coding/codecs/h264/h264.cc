@@ -25,6 +25,10 @@
 #include "modules/video_coding/codecs/h264/h264_encoder_impl.h"
 #endif
 
+#if defined(WEBRTC_USE_H264_DLOPEN)
+#include "modules/video_coding/codecs/h264/h264_dlopen.h"
+#endif
+
 #include "rtc_base/checks.h"
 #include "rtc_base/logging.h"
 
@@ -40,6 +44,8 @@ bool g_rtc_use_h264 = true;
 bool IsH264CodecSupported() {
 #if defined(WEBRTC_USE_H264)
   return g_rtc_use_h264;
+#elif defined(WEBRTC_USE_H264_DLOPEN)
+  return loadLibOpenH264(NULL);
 #else
   return false;
 #endif
